@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnvironmentScanner : MonoBehaviour
@@ -14,10 +15,10 @@ public class EnvironmentScanner : MonoBehaviour
         var hitData = new ObstacleHitData();
 
         var forwardOrigin = transform.position + forwardRayOffset;
-        hitData.forwardHitFound = Physics.Raycast(forwardOrigin, transform.forward, 
+        hitData.forwardHitFound = Physics.Raycast(forwardOrigin, transform.forward,
             out hitData.forwardHit, forwardRayLength, obstacleLayer);
 
-        Debug.DrawRay(forwardOrigin, transform.forward * forwardRayLength, (hitData.forwardHitFound) ? Color.red : Color.white);
+        // Debug.DrawRay(forwardOrigin, transform.forward * forwardRayLength, (hitData.forwardHitFound) ? Color.red : Color.white);
 
         if (hitData.forwardHitFound)
         {
@@ -27,7 +28,7 @@ public class EnvironmentScanner : MonoBehaviour
 
             Debug.DrawRay(heightOrigin, Vector3.down * heightRayLength, (hitData.heightHitFound) ? Color.red : Color.white);
         }
-        
+
         return hitData;
     }
 }
