@@ -21,12 +21,28 @@ public class ParkourAction : ScriptableObject
     [SerializeField] float matchTargetTime;
     [SerializeField] Vector3 matchPosWeight = new Vector3(0, 1, 0);
 
+    [Header("Action Type")]
+    [Tooltip("If true, triggers PlayerController physics instead of target-matching animation")]
+    [SerializeField] bool isPhysicsJump;
+
+    [Header("Action Type Settings")]
+    [SerializeField] bool isFallback;
+
+    [Header("Action Timing")]
+    [Tooltip("The exact distance from the obstacle where the animation will start playing.")]
+    [SerializeField] float actionTriggerDistance = 1f;
+
     public Quaternion TargetRotation { get; set; }
     public Vector3 MatchPos { get; set; }
     public bool Mirror { get; set; }
 
     public virtual bool CheckIfPossible(ObstacleHitData hitData, Transform player)
     {
+        // ADD THIS SAFETY CHECK:
+        // If the raycast didn't hit anything, we obviously can't do a parkour move!
+        if (!hitData.forwardHitFound || !hitData.heightHitFound)
+            return false;
+
         // Check Tag
         if (!string.IsNullOrEmpty(obstacleTag) && hitData.forwardHit.transform.tag != obstacleTag)
             return false;
@@ -54,4 +70,8 @@ public class ParkourAction : ScriptableObject
     public float MatchStartTime => matchStartTime;
     public float MatchTargetTime => matchTargetTime;
     public Vector3 MatchPosWeight => matchPosWeight;
+
+    public bool IsPhysicsJump => isPhysicsJump;
+    public bool IsFallback => isFallback;
+    public float ActionTriggerDistance => actionTriggerDistance;
 }

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b082be1c96b134248afa8966ef080150, type: 3}
+  m_Name: Vault 2
+  m_EditorClassIdentifier: Assembly-CSharp::VaultAction
+  animName: Vault 2
+  obstacleTag: Table 1
+  minHeight: 0.8
+  maxHeight: 1.2
+  rotateToObstacle: 1
+  postActionDelay: 0
+  enableTargetMatching: 1
+  matchBodyPart: 4
+  matchStartTime: 0.25
+  matchTargetTime: 0.55
+  matchPosWeight: {x: 1, y: 1, z: 0}
+  isPhysicsJump: 0
+  isFallback: 0
+  actionTriggerDistance: 0.8

@@ -22,4 +22,7 @@ MonoBehaviour:
   matchBodyPart: 3
   matchStartTime: 0.15
   matchTargetTime: 0.4
-  matchPosWeight: {x: 0, y: 1, z: 0}
+  matchPosWeight: {x: 1, y: 1, z: 0}
+  isPhysicsJump: 0
+  isFallback: 0
+  actionTriggerDistance: 1

@@ -9,17 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9baaddc52451da4698ea9239815d3cc, type: 3}
+  m_Script: {fileID: 11500000, guid: b082be1c96b134248afa8966ef080150, type: 3}
   m_Name: ClimbUp
-  m_EditorClassIdentifier: Assembly-CSharp::ParkourAction
+  m_EditorClassIdentifier: Assembly-CSharp::VaultAction
   animName: ClimbUp
-  obstacleTag: 
-  minHeight: 1.5
-  maxHeight: 2.5
+  obstacleTag: Tank
+  minHeight: 2
+  maxHeight: 3
   rotateToObstacle: 1
   postActionDelay: 0.4
   enableTargetMatching: 1
-  matchBodyPart: 5
+  matchBodyPart: 4
   matchStartTime: 0.08
   matchTargetTime: 0.28
-  matchPosWeight: {x: 0, y: 1, z: 1}
+  matchPosWeight: {x: 1, y: 1, z: 1}
+  isPhysicsJump: 0
+  isFallback: 0
+  actionTriggerDistance: 0.8

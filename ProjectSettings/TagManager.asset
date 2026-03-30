@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Fence
   - Slide
+  - Table 1
+  - Tank
+  - Table 2
+  - Table 3
   layers:
   - Default
   - TransparentFX
@@ -14,7 +18,7 @@ TagManager:
   - Water
   - UI
   - Obstacles
-  - 
+  - Ground
   - 
   - 
   - 
