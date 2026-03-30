@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Fence
+  - Slide
   layers:
   - Default
   - TransparentFX
