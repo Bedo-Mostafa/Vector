@@ -10,6 +10,10 @@ TagManager:
   - Tank
   - Table 2
   - Table 3
+  - BigJump
+  - JumpOver
+  - FrontFlip
+  - FrontTwistFlip
   layers:
   - Default
   - TransparentFX

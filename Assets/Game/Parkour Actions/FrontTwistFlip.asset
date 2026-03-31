@@ -9,20 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9baaddc52451da4698ea9239815d3cc, type: 3}
-  m_Name: Fallback_TableRoll
-  m_EditorClassIdentifier: Assembly-CSharp::ParkourAction
-  animName: Fallback_TableRoll
-  obstacleTag: 
+  m_Script: {fileID: 11500000, guid: b082be1c96b134248afa8966ef080150, type: 3}
+  m_Name: FrontTwistFlip
+  m_EditorClassIdentifier: Assembly-CSharp::VaultAction
+  animName: FrontTwistFlip
+  obstacleTag: FrontTwistFlip
   minHeight: 0.5
   maxHeight: 1.5
   rotateToObstacle: 1
   postActionDelay: 0
-  enableTargetMatching: 1
-  matchBodyPart: 0
-  matchStartTime: 0.1
-  matchTargetTime: 0.33
+  enableTargetMatching: 0
+  matchBodyPart: 4
+  matchStartTime: 0
+  matchTargetTime: 0
   matchPosWeight: {x: 0, y: 1, z: 0}
   isPhysicsJump: 0
-  isFallback: 1
-  actionTriggerDistance: 0.5
+  isFallback: 0
+  actionTriggerDistance: 2.7

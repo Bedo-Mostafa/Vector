@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: JumpOver
   m_EditorClassIdentifier: Assembly-CSharp::ParkourAction
   animName: JumpOver
-  obstacleTag: Table 2
+  obstacleTag: JumpOver
   minHeight: 0.5
   maxHeight: 2.5
   rotateToObstacle: 1
   postActionDelay: 0
   enableTargetMatching: 0
-  matchBodyPart: 5
-  matchStartTime: 0.08
-  matchTargetTime: 0.28
-  matchPosWeight: {x: 1, y: 1, z: 1}
+  matchBodyPart: 0
+  matchStartTime: 0.25
+  matchTargetTime: 0.38
+  matchPosWeight: {x: 1, y: 0, z: 0}
   isPhysicsJump: 0
   isFallback: 0
-  actionTriggerDistance: 1
+  actionTriggerDistance: 3.3

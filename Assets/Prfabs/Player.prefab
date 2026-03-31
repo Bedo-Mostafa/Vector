@@ -49,13 +49,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6771d8327f2ac2b49a08bf42e1deba86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 5
   rotationSpeed: 500
+  autoRunSpeed: 1
+  jumpHeight: 2.5
+  jumpForwardBoost: 6
+  gravity: -20
+  jumpPrepTime: 0.08
   groundCheckRadius: 0.2
   groundCheckOffset: {x: 0, y: 0.1, z: 0.07}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
+  rollCapsuleHeight: 0.9
+  rollCapsuleCenterY: 0.45
+  normalCapsuleHeight: 1.8
+  normalCapsuleCenterY: 0.9
 --- !u!95 &4518737171199070374
 Animator:
   serializedVersion: 7
@@ -116,10 +124,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParkourController
   parkourActions:
-  - {fileID: 11400000, guid: 413ae52516b630c478b026083c22b35a, type: 2}
+  - {fileID: 11400000, guid: 34f6ee26c97319643b518dc7e0a0ff6c, type: 2}
+  - {fileID: 11400000, guid: d77d0f738161c0c48833231e7f692174, type: 2}
   - {fileID: 11400000, guid: 73be7bcf1e140704e94c7d11526090cb, type: 2}
-  - {fileID: 11400000, guid: 6d890bfcc5ff9de4293653a9e4322503, type: 2}
-  - {fileID: 11400000, guid: ab17731d6cb26fb40b4d1bb60ee09157, type: 2}
+  - {fileID: 11400000, guid: 07c2a83d27d1663408ecb47617341816, type: 2}
+  - {fileID: 11400000, guid: dcc3bb1814b1da849a8363205888496c, type: 2}
+  - {fileID: 11400000, guid: 4fc1fe8efadd8ef4284ce2a9bcbc39fd, type: 2}
+  - {fileID: 11400000, guid: 231dac15e9d850240893870384b61ff0, type: 2}
+  - {fileID: 11400000, guid: bf4bae3eb9d56134489859a6e6da7dcf, type: 2}
+  - {fileID: 11400000, guid: 7a051f8de88e3254c97093c505b8f6b0, type: 2}
+  - {fileID: 11400000, guid: 6bdc873689f0f8d4fa21f4e4adaeec74, type: 2}
+  parkourPromptUI: {fileID: 0}
+  gapJumpForwardMultiplier: 1.5
+  actionCrossfade: 0.15
+  transitionSafetyTimeout: 0.5
+  animatorLayer: 0
 --- !u!114 &979631593583603557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,11 +152,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnvironmentScanner
   forwardRayOffset: {x: 0, y: 0.25, z: 0}
-  forwardRayLength: 0.8
-  heightRayLength: 5
+  forwardRayLength: 10
+  heightRayLength: 6
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 64
+  lookaheadRayLength: 10
 --- !u!1001 &176980509459223333
 PrefabInstance:
   m_ObjectHideFlags: 0

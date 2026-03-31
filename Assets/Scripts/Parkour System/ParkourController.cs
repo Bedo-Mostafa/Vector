@@ -45,44 +45,37 @@ public class ParkourController : MonoBehaviour
         if (environmentScanner == null) Debug.LogError("[ParkourController] EnvironmentScanner not found!", this);
         if (animator == null) Debug.LogError("[ParkourController] Animator not found!", this);
     }
+
     private void Update()
     {
         if (inAction) return;
 
-        var lookaheadHit = environmentScanner.LookaheadObstacleCheck();
-        var closeHit = environmentScanner.ObstacleCheck();
+        var hitData = environmentScanner.LookaheadObstacleCheck();
 
-        // ── 1. Queued Action Logic (Waiting for the perfect distance) ─────
+        // ── 1. Queued Action Logic (Waiting for perfect distance) ─────────
         if (isActionQueued)
         {
-            // If the lookahead ray is still hitting the obstacle...
-            if (lookaheadHit.forwardHitFound)
+            if (hitData.forwardHitFound)
             {
-                // Check if we have closed the distance!
-                if (lookaheadHit.forwardHit.distance <= queuedAction.ActionTriggerDistance)
+                if (hitData.forwardHit.distance <= queuedAction.ActionTriggerDistance)
                 {
-                    // Target distance reached! Execute the animation!
                     isActionQueued = false;
                     StartCoroutine(DoParkourAction(queuedAction));
                 }
             }
             else
             {
-                // We lost the obstacle (the player turned away or stopped)
                 isActionQueued = false;
                 queuedAction = null;
             }
-
-            // Stop running the rest of the Update loop while we are waiting
             return;
         }
-
 
         // ── 2. UI Prompt Logic ────────────────────────────────────────────
         bool showUI = false;
         foreach (var action in parkourActions)
         {
-            if (!action.IsFallback && !action.IsPhysicsJump && action.CheckIfPossible(lookaheadHit, transform))
+            if (!action.IsFallback && !action.IsPhysicsJump && action.CheckIfPossible(hitData, transform))
             {
                 showUI = true;
                 break;
@@ -92,28 +85,39 @@ public class ParkourController : MonoBehaviour
         if (showUI) ShowPrompt();
         else HidePrompt();
 
-
         // ── 3. Manual Input (Jump Button) ─────────────────────────────────
         if (Input.GetButtonDown("Jump"))
         {
             foreach (var action in parkourActions)
             {
-                if (!action.IsFallback && action.CheckIfPossible(lookaheadHit, transform))
+                if (!action.IsFallback && action.CheckIfPossible(hitData, transform))
                 {
                     if (action.IsPhysicsJump)
                     {
-                        // Open-air jump happens immediately
                         if (playerController.IsGrounded)
-                        {
                             playerController.DoJump(gapJumpForwardMultiplier);
-                        }
                     }
                     else
                     {
-                        // It's a parkour move! QUEUE IT instead of doing it instantly.
-                        queuedAction = action;
-                        isActionQueued = true;
-                        HidePrompt();
+                        // DID THEY PRESS JUMP TOO LATE?
+                        if (hitData.forwardHit.distance < action.ActionTriggerDistance)
+                        {
+                            // Missed the perfect window! QUEUE the fallback action instead.
+                            var fallback = GetFallbackAction(hitData);
+                            if (fallback != null)
+                            {
+                                queuedAction = fallback;
+                                isActionQueued = true;
+                                HidePrompt();
+                            }
+                        }
+                        else
+                        {
+                            // Good timing! Queue the normal vault action.
+                            queuedAction = action;
+                            isActionQueued = true;
+                            HidePrompt();
+                        }
                     }
                     break;
                 }
@@ -121,22 +125,46 @@ public class ParkourController : MonoBehaviour
             return;
         }
 
-
-        // ── 4. Fallback Auto-Trigger (Crashed into obstacle) ──────────────
-        if (closeHit.forwardHitFound && closeHit.heightHitFound)
+        // ── 4. Fallback Auto-Trigger (Crashed without pressing jump) ──────
+        if (hitData.forwardHitFound && hitData.heightHitFound)
         {
-            foreach (var action in parkourActions)
+            var fallback = GetFallbackAction(hitData);
+            if (fallback != null && hitData.forwardHit.distance <= fallback.ActionTriggerDistance)
             {
-                if (action.IsFallback && action.CheckIfPossible(closeHit, transform))
-                {
-                    HidePrompt();
-                    StartCoroutine(DoParkourAction(action));
-                    break;
-                }
+                HidePrompt();
+                StartCoroutine(DoParkourAction(fallback));
             }
         }
     }
 
+    // ── Helper Method for Fallbacks ───────────────────────────────────────
+    // This now just FINDS the fallback action without automatically playing it
+    ParkourAction GetFallbackAction(ObstacleHitData hitData)
+    {
+        foreach (var action in parkourActions)
+        {
+            if (action.IsFallback && action.CheckIfPossible(hitData, transform))
+            {
+                return action;
+            }
+        }
+        return null; // Return nothing if no fallback is found
+    }
+
+    // ── Helper Method for Fallbacks ───────────────────────────────────────
+    void TriggerFallbackAction(ObstacleHitData hitData)
+    {
+        foreach (var action in parkourActions)
+        {
+            // Find a fallback action that matches this obstacle
+            if (action.IsFallback && action.CheckIfPossible(hitData, transform))
+            {
+                HidePrompt();
+                StartCoroutine(DoParkourAction(action));
+                break;
+            }
+        }
+    }
     IEnumerator DoParkourAction(ParkourAction action)
     {
         inAction = true;
